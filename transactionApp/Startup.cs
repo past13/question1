@@ -21,7 +21,8 @@ namespace transactioApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<IParseFileService, ParseFileService>();
+            services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<IFileService, FileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,20 +7,20 @@ namespace transactioApp.Controllers
     using Services;
 
     [Produces("application/json")]
-    [Route("api/csv")]
-    public class CSVController: ControllerBase
+    [Route("file")]
+    public class FileController: ControllerBase
     {
-        private readonly IParseFileService _service;
+        private readonly ITransactionService _service;
 
-        public CSVController(IParseFileService service) 
+        public FileController(ITransactionService service) 
         {
             _service = service;
         }
 
         [HttpPost]
-        public IActionResult PostFormData([FromForm] CsvFileModel file) 
+        public IActionResult PostFile([FromForm]FileModel file) 
         {   
-            var result = _service.parseFile(file);
+            var result = _service.ProcessTransactions(file);
 
             return Ok(result);
         }
