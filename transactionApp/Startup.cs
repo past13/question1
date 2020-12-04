@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 namespace transactioApp
 {
@@ -10,8 +11,7 @@ namespace transactioApp
     using Repositories;
     using System;
     using AutoMapper;
-    using transactioApp.Context;
-    using Microsoft.EntityFrameworkCore;
+    using Context;
 
     public class Startup
     {

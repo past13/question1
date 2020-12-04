@@ -43,6 +43,8 @@ namespace transactioApp.Services
                 return false;
             }
 
+            var isSaved = _service.SaveTransaction(items);
+
             return true;
         }
 
