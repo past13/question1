@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Models
+namespace transactioApp.Models
 {
     public class CsvFileModel
     {

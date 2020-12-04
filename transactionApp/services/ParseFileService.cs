@@ -2,11 +2,12 @@ using System;
 using System.Text;
 using System.Linq;
 
-namespace Services
+namespace transactioApp.Services
 {
-    using Helper;
-    using Models;
     using TinyCsvParser;
+    using Models;
+    using Helper;
+
     public class ParseFileService : IParseFileService
     {         
         public ParseFileService() 
@@ -29,7 +30,6 @@ namespace Services
         public bool parseFile(CsvFileModel file)
         {
             var csvParser = SetupCsvParser();
-            var validator = new PersonValidator();
 
             var result = csvParser
                 .ReadFromFile(file.File.FileName, Encoding.ASCII)

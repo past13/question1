@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Controllers
+namespace transactioApp.Controllers
 {
     using Models;
     using Services;

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using TinyCsvParser.TypeConverter;
 
-namespace Helper
+namespace transactioApp.Helper
 {
     public class TransactionLength : ITypeConverter<string>
     {

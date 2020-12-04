@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/transactionApp/bin/Debug/netcoreapp3.1/testwebapi.dll",
+            "program": "${workspaceFolder}/transactionApp/bin/Debug/netcoreapp3.1/transactioApp.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
