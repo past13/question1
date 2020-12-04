@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 namespace transactioApp
 {
     using Services;
+    using Repositories;
 
     public class Startup
     {
@@ -22,6 +23,7 @@ namespace transactioApp
         {
             services.AddControllers();
             services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IFileService, FileService>();
         }
 

@@ -8,6 +8,7 @@ namespace transactioApp.Services
 
     public interface ITransactionService
     {
+        bool SaveTransaction(List<TransactionItem> list);
         List<ValidationResult> ValidateTransactions(List<TransactionItem> list); 
     } 
 }

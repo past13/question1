@@ -1,17 +1,24 @@
-using System;
 using System.Collections.Generic;
 using FluentValidation.Results;
 
 namespace transactioApp.Services
 {
-    using Models;
     using Models.Xml;
+    using Repositories;
     using Validators;
 
     public class TransactionService : ITransactionService
     {         
-        public TransactionService() 
+        private readonly ITransactionRepository _repository;
+
+        public TransactionService(ITransactionRepository repository) 
         {
+            _repository = repository;
+        }
+
+        public bool SaveTransaction(List<TransactionItem> list)
+        {
+            return _repository.SaveTransaction(list);
         }
 
         public List<ValidationResult> ValidateTransactions(List<TransactionItem> list) 

@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 namespace transactioApp.Repositories
 {
+    using Models.Xml;
+
     public class TransactionRepository : ITransactionRepository 
     {
         public TransactionRepository()
@@ -13,9 +15,10 @@ namespace transactioApp.Repositories
             throw new System.NotImplementedException();
         }
 
-        public bool SaveTransactions(List<int> list)
+        public bool SaveTransaction(List<TransactionItem> list)
         {
-            throw new System.NotImplementedException();
+            
+            return true;
         }
     }
 }
