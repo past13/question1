@@ -36,6 +36,13 @@ namespace transactioApp.Services
                 items = ParseCsvFile(file);
             }
 
+            var errors = _service.ValidateTransactions(items);
+            if (errors.Capacity != 0) 
+            {
+                //return error list to database/file
+                return false;
+            }
+
             return true;
         }
 
