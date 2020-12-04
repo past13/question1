@@ -1,6 +1,7 @@
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace transactioApp.Repositories
 {
@@ -8,7 +9,8 @@ namespace transactioApp.Repositories
     using Models.Dto;
     using AutoMapper;
     using Context;
-    using transactioApp.Models;
+    using Models;
+    using Models.Enums;
 
     public class TransactionRepository : ITransactionRepository 
     {
@@ -35,12 +37,29 @@ namespace transactioApp.Repositories
 
         public IEnumerable<TransactionDto> GetTransactionsByDatePeriod(FilterDates filter)
         {
-            throw new System.NotImplementedException();
+            var query = _context.Transactions
+                            .Include(c => c.PaymentDetails)
+                            .Select(c => c);
+
+            if (filter.FromDate != null) 
+            {
+                query = query.Where(q => q.TransactionDate > filter.FromDate);
+            }
+
+            if (filter.ToDate != null) 
+            {
+                query = query.Where(q => q.TransactionDate < filter.ToDate);
+            }
+
+            return query.ToList();
         }
 
         public IEnumerable<TransactionDto> GetTransactionsByStatus(string status)
         {
-            throw new System.NotImplementedException();
+            var enumStatus = (TransactionStatus)Enum.Parse(typeof(TransactionStatus), status, true);
+            return _context.Transactions
+                            .Include(c => c.PaymentDetails)
+                            .Where(x => x.Status == enumStatus);
         }
 
         public bool SaveTransaction(List<TransactionItem> list)

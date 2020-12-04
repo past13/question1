@@ -30,12 +30,12 @@ namespace transactioApp.Services
 
         public IEnumerable<TransactionDto> GetTransactionsByDatePeriod(FilterDates filter)
         {
-            throw new System.NotImplementedException();
+            return _repository.GetTransactionsByDatePeriod(filter);
         }
 
         public IEnumerable<TransactionDto> GetTransactionsByStatus(string status)
         {
-            throw new System.NotImplementedException();
+            return _repository.GetTransactionsByStatus(status);
         }
 
         public bool SaveTransaction(List<TransactionItem> list)

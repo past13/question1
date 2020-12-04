@@ -1,8 +1,10 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 
 namespace transactioApp.Controllers
 {
     using Models;
+    using Models.Enums;
     using Services;
     using Validators;
 
@@ -42,13 +44,22 @@ namespace transactioApp.Controllers
         [HttpGet("status/{status}")]
         public IActionResult GetByStatus(string status) 
         {
-            return Ok();
+            if (!Enum.IsDefined(typeof(TransactionStatus), status)) 
+            {
+                return BadRequest("Status doesn't exist. Ex.: Approved, Rejected, Failed, Done, Finished");
+            }
+
+            var result = _service.GetTransactionsByStatus(status);
+
+            return Ok(result);
         }
 
-        [HttpGet("filterbydate")]
-        public IActionResult GetDate([FromBody]FilterDates filter) 
+        [HttpGet("getbyperiod")]
+        public IActionResult GetByDate([FromBody]FilterDates filter) 
         {
-            return Ok();
+            var result = _service.GetTransactionsByDatePeriod(filter);
+
+            return Ok(result);
         }
     }
 }
