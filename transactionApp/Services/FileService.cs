@@ -4,16 +4,16 @@ using System.Xml.Serialization;
 
 namespace transactioApp.Services
 {
+    using System.Xml;
     using Models;
     using Models.Xml;
-    using Repositories;
 
     public class FileService : IFileService
     {
         private readonly ITransactionService _service;
-        public FileService() 
+        public FileService(ITransactionService service) 
         {
-
+            _service = service;
         }
 
         public bool ProcessFile(FileModel file)
@@ -37,10 +37,10 @@ namespace transactioApp.Services
         {
             TransactionXml transactionObject = null;
 
-            using (var fileStream = File.Open(file.FileInput.FileName, FileMode.Open))
+            using(XmlReader reader = XmlReader.Create(file.FileInput.OpenReadStream()))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(TransactionXml));
-                transactionObject = (TransactionXml)serializer.Deserialize(fileStream);
+                transactionObject = (TransactionXml)serializer.Deserialize(reader);
             }
 
             return transactionObject.Transactions;
