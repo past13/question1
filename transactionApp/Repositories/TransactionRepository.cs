@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace transactioApp.Repositories
 {
@@ -6,6 +8,7 @@ namespace transactioApp.Repositories
     using Models.Dto;
     using AutoMapper;
     using Context;
+    using transactioApp.Models;
 
     public class TransactionRepository : ITransactionRepository 
     {
@@ -18,7 +21,22 @@ namespace transactioApp.Repositories
             _mapper = mapper;
         }
 
-        public IEnumerable<int> GetTransactions()
+        public IEnumerable<TransactionDto> GetTransactions()
+        {
+            return _context.Transactions.Include(c => c.PaymentDetails).ToList();
+        }
+
+        public IEnumerable<TransactionDto> GetTransactionsByCurrency(string currency)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<TransactionDto> GetTransactionsByDatePeriod(FilterDates filter)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<TransactionDto> GetTransactionsByStatus(string status)
         {
             throw new System.NotImplementedException();
         }

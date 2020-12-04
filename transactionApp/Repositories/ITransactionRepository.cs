@@ -1,11 +1,18 @@
 using System.Collections.Generic;
-using transactioApp.Models.Xml;
+
 
 namespace transactioApp.Repositories
 {
+    using Models;
+    using Models.Dto;
+    using Models.Xml;
+
     public interface ITransactionRepository
     {
-        IEnumerable<int> GetTransactions();
+        IEnumerable<TransactionDto> GetTransactions();
         bool SaveTransaction(List<TransactionItem> list);
+        IEnumerable<TransactionDto> GetTransactionsByCurrency(string currency);
+        IEnumerable<TransactionDto> GetTransactionsByStatus(string status);
+        IEnumerable<TransactionDto> GetTransactionsByDatePeriod(FilterDates filter);
     }
 }

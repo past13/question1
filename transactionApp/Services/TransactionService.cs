@@ -5,6 +5,7 @@ namespace transactioApp.Services
 {
     using Models.Xml;
     using Repositories;
+    using Models.Dto;
     using Validators;
 
     public class TransactionService : ITransactionService
@@ -14,6 +15,11 @@ namespace transactioApp.Services
         public TransactionService(ITransactionRepository repository) 
         {
             _repository = repository;
+        }
+
+        public IEnumerable<TransactionDto> GetList()
+        {
+            return _repository.GetTransactions();
         }
 
         public bool SaveTransaction(List<TransactionItem> list)

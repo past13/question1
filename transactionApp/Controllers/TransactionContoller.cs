@@ -17,8 +17,9 @@ namespace transactioApp.Controllers
         [HttpGet("list")]
         public IActionResult GetList() 
         {
-            
-            return Ok();
+            var result = _service.GetList();
+
+            return Ok(result);
         }
 
         [HttpGet("currency/{currency}")]
