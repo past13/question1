@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="17.0.1" />
     <PackageReference Include="FluentValidation" Version="9.3.0" />
-    <PackageReference Include="tinycsvparser" Version="2.5.2" />
   </ItemGroup>
 
 
