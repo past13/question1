@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 namespace transactioApp.Controllers
 {
+    using System.IO;
     using Models;
     using Services;
 
@@ -18,11 +19,20 @@ namespace transactioApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostFile([FromForm]FileModel file) 
+        public async Task<IActionResult> PostFile([FromForm]FileModel file) 
         {   
-            var result = _service.ProcessFile(file);
+            if(ModelState.IsValid)
+            {
+                
+            }
+            // if (file) 
+            // {
+            //     return BadRequest();                
+            // }
 
-            return Ok(result);
+            // await _service.ProcessFile(file);
+
+            return Ok(2121);
         }
     }
 }

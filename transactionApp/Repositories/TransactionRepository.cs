@@ -11,6 +11,7 @@ namespace transactioApp.Repositories
     using Context;
     using Models;
     using Models.Enums;
+    using System.Threading.Tasks;
 
     public class TransactionRepository : ITransactionRepository 
     {
@@ -23,63 +24,51 @@ namespace transactioApp.Repositories
             _mapper = mapper;
         }
 
-        public IEnumerable<TransactionDto> GetTransactions()
+        public async Task<IEnumerable<TransactionDto>> GetTransactions()
         {
-            return _context.Transactions.Include(c => c.PaymentDetails).ToList();
+            return await _context.Transactions.Include(c => c.PaymentDetails).ToListAsync();
         }
 
-        public IEnumerable<TransactionDto> GetTransactionsByCurrency(string currency)
+        public async Task<IEnumerable<TransactionDto>> GetTransactionsByCurrency(string currency)
         {
-            return _context.Transactions
+            return await _context.Transactions
                             .Include(c => c.PaymentDetails)
-                            .Where(x => x.PaymentDetails.CurrencyCode == currency.ToUpper());
+                            .Where(x => x.PaymentDetails.CurrencyCode == currency.ToUpper())
+                            .ToListAsync();
         }
 
-        public IEnumerable<TransactionDto> GetTransactionsByDatePeriod(FilterDates filter)
+        public async Task<IEnumerable<TransactionDto>> GetTransactionsByDatePeriod(FilterDates filter)
         {
-            var query = _context.Transactions
+            var query = await _context.Transactions
                             .Include(c => c.PaymentDetails)
-                            .Select(c => c);
+                            .Select(c => c)
+                            .Where(c => (filter.FromDate.HasValue && c.TransactionDate > filter.FromDate)
+                            && (filter.ToDate.HasValue && c.TransactionDate < filter.ToDate)).ToListAsync();
 
-            if (filter.FromDate != null) 
-            {
-                query = query.Where(q => q.TransactionDate > filter.FromDate);
-            }
-
-            if (filter.ToDate != null) 
-            {
-                query = query.Where(q => q.TransactionDate < filter.ToDate);
-            }
-
-            return query.ToList();
+            return query;
         }
 
-        public IEnumerable<TransactionDto> GetTransactionsByStatus(string status)
+        public async Task<IEnumerable<TransactionDto>> GetTransactionsByStatus(string status)
         {
             var enumStatus = (TransactionStatus)Enum.Parse(typeof(TransactionStatus), status, true);
-            return _context.Transactions
+            return await _context.Transactions
                             .Include(c => c.PaymentDetails)
-                            .Where(x => x.Status == enumStatus);
+                            .Where(x => x.Status == enumStatus)
+                            .ToListAsync();
         }
 
-        public bool SaveTransaction(List<TransactionItem> list)
+        public async Task SaveTransaction(List<TransactionItem> list)
         {
             var transactionsDto = _mapper.Map<List<TransactionItem>, List<TransactionDto>>(list);
-               
-            foreach (var item in transactionsDto)
-            {
-                _context.Transactions.Add(item);
-            }
-
+            
+            await _context.Transactions.AddRangeAsync(transactionsDto);
             try
             {
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (System.Exception)
             {
             }
-
-            return true;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace transactioApp.Models.Dto
     public class TransactionDto
     {
         [Key]
+        public int Id { get; set; }
         public string TransactionId { get; set; }
         public DateTime TransactionDate { get; set; }
         public TransactionStatus Status  { get; set; }

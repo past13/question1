@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace transactioApp.Controllers
 {
+    using System.Threading.Tasks;
     using Models;
     using Models.Enums;
     using Services;
@@ -19,15 +20,15 @@ namespace transactioApp.Controllers
         }
 
         [HttpGet("list")]
-        public IActionResult GetList() 
+        public async Task<IActionResult> GetList() 
         {
-            var result = _service.GetList();
+            var result = await _service.GetList();
 
             return Ok(result);
         }
 
         [HttpGet("currency/{currency}")]
-        public IActionResult GetByCurrency(string currency) 
+        public async Task<IActionResult> GetByCurrency(string currency) 
         {
             var exist = ValuesValidator.ValidateCurrency(currency);
 
@@ -36,28 +37,28 @@ namespace transactioApp.Controllers
                 return BadRequest("Currency doesn't exist");
             }
 
-            var result = _service.GetTransactionsByCurrency(currency);
+            var result = await _service.GetTransactionsByCurrency(currency);
 
             return Ok(result);
         }
 
         [HttpGet("status/{status}")]
-        public IActionResult GetByStatus(string status) 
+        public async Task<IActionResult> GetByStatus(string status) 
         {
             if (!Enum.IsDefined(typeof(TransactionStatus), status)) 
             {
                 return BadRequest("Status doesn't exist. Ex.: Approved, Rejected, Failed, Done, Finished");
             }
 
-            var result = _service.GetTransactionsByStatus(status);
+            var result = await _service.GetTransactionsByStatus(status);
 
             return Ok(result);
         }
 
         [HttpGet("getbyperiod")]
-        public IActionResult GetByDate([FromBody]FilterDates filter) 
+        public async Task<IActionResult> GetByDate([FromBody]FilterDates filter) 
         {
-            var result = _service.GetTransactionsByDatePeriod(filter);
+            var result =  await _service.GetTransactionsByDatePeriod(filter);
 
             return Ok(result);
         }

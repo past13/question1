@@ -13,6 +13,7 @@ namespace transactioApp.Services
     using Models.Xml;
     using Mappers;
     using CsvHelper;
+    using System.Threading.Tasks;
 
     public class FileService : IFileService
     {
@@ -22,7 +23,7 @@ namespace transactioApp.Services
             _service = service;
         }
 
-        public bool ProcessFile(FileModel file)
+        public async Task ProcessFile(FileModel file)
         {
             List<TransactionItem> items = new List<TransactionItem>();
 
@@ -39,13 +40,19 @@ namespace transactioApp.Services
             var errors = _service.ValidateTransactions(items);
             if (errors.Capacity != 0) 
             {
-                //return error list to database/file
-                return false;
+                //TextWriter
+                var tw = new StreamWriter("date.txt");
+                foreach (var error in errors)
+                {
+                    tw.WriteLine(string.Format("{0} {1} {2}", error.ErrorMessage, error.PropertyName, error.TransactionId));
+                }
+
+                tw.Close();
+                // var writeMe = "File content";
+                // File.WriteAllText("output.txt", writeMe);
             }
 
-            var isSaved = _service.SaveTransaction(items);
-
-            return true;
+            await _service.SaveTransaction(items);
         }
 
         private List<TransactionItem> ParseXmlFile(FileModel file)

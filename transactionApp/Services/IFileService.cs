@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-
 namespace transactioApp.Services
 {
+    using System.Threading.Tasks;
     using Models;
     public interface IFileService
     {
-        bool ProcessFile(FileModel file);
+        Task ProcessFile(FileModel file);
     } 
 }

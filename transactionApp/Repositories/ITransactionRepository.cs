@@ -3,16 +3,17 @@ using System.Collections.Generic;
 
 namespace transactioApp.Repositories
 {
+    using System.Threading.Tasks;
     using Models;
     using Models.Dto;
     using Models.Xml;
 
     public interface ITransactionRepository
     {
-        IEnumerable<TransactionDto> GetTransactions();
-        bool SaveTransaction(List<TransactionItem> list);
-        IEnumerable<TransactionDto> GetTransactionsByCurrency(string currency);
-        IEnumerable<TransactionDto> GetTransactionsByStatus(string status);
-        IEnumerable<TransactionDto> GetTransactionsByDatePeriod(FilterDates filter);
+        Task<IEnumerable<TransactionDto>> GetTransactions();
+        Task<IEnumerable<TransactionDto>> GetTransactionsByCurrency(string currency);
+        Task<IEnumerable<TransactionDto>> GetTransactionsByStatus(string status);
+        Task SaveTransaction(List<TransactionItem> list);
+        Task<IEnumerable<TransactionDto>> GetTransactionsByDatePeriod(FilterDates filter);
     }
 }
