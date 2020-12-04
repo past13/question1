@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using transactioApp.Models;
-using transactioApp.Services;
 
 namespace transactioApp.Controllers
 {
+    using Models;
+    using Services;
+    using Validators;
+
     [Produces("application/json")]
     [Route("transaction")]
     public class TransactionContoller: ControllerBase
@@ -25,7 +27,16 @@ namespace transactioApp.Controllers
         [HttpGet("currency/{currency}")]
         public IActionResult GetByCurrency(string currency) 
         {
-            return Ok();
+            var exist = ValuesValidator.ValidateCurrency(currency);
+
+            if (!exist) 
+            {
+                return BadRequest("Currency doesn't exist");
+            }
+
+            var result = _service.GetTransactionsByCurrency(currency);
+
+            return Ok(result);
         }
 
         [HttpGet("status/{status}")]

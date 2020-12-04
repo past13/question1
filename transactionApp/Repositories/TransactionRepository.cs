@@ -28,7 +28,9 @@ namespace transactioApp.Repositories
 
         public IEnumerable<TransactionDto> GetTransactionsByCurrency(string currency)
         {
-            throw new System.NotImplementedException();
+            return _context.Transactions
+                            .Include(c => c.PaymentDetails)
+                            .Where(x => x.PaymentDetails.CurrencyCode == currency.ToUpper());
         }
 
         public IEnumerable<TransactionDto> GetTransactionsByDatePeriod(FilterDates filter)

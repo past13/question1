@@ -7,6 +7,7 @@ namespace transactioApp.Services
     using Repositories;
     using Models.Dto;
     using Validators;
+    using transactioApp.Models;
 
     public class TransactionService : ITransactionService
     {         
@@ -20,6 +21,21 @@ namespace transactioApp.Services
         public IEnumerable<TransactionDto> GetList()
         {
             return _repository.GetTransactions();
+        }
+
+        public IEnumerable<TransactionDto> GetTransactionsByCurrency(string currency)
+        {
+            return _repository.GetTransactionsByCurrency(currency);
+        }
+
+        public IEnumerable<TransactionDto> GetTransactionsByDatePeriod(FilterDates filter)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<TransactionDto> GetTransactionsByStatus(string status)
+        {
+            throw new System.NotImplementedException();
         }
 
         public bool SaveTransaction(List<TransactionItem> list)
