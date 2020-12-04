@@ -10,9 +10,9 @@ namespace transactioApp.Controllers
     [Route("file")]
     public class FileController: ControllerBase
     {
-        private readonly ITransactionService _service;
+        private readonly IFileService _service;
 
-        public FileController(ITransactionService service) 
+        public FileController(IFileService service) 
         {
             _service = service;
         }
@@ -20,7 +20,7 @@ namespace transactioApp.Controllers
         [HttpPost]
         public IActionResult PostFile([FromForm]FileModel file) 
         {   
-            var result = _service.ProcessTransactions(file);
+            var result = _service.ProcessFile(file);
 
             return Ok(result);
         }

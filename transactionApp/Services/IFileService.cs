@@ -5,7 +5,6 @@ namespace transactioApp.Services
     using Models;
     public interface IFileService
     {
-        List<int> ParseXmlFile(FileModel file);
-        List<int> ParseCsvFile(FileModel file);
+        bool ProcessFile(FileModel file);
     } 
 }
